@@ -14,6 +14,10 @@ This means that you have the entire Unity pipeline at your disposal for VTubing 
 5. Run the Unity project (SampleScene.scene)
 6. Your avatar will be automatically calibrated upon playing Unity.
 
+## Controls
+* Press TAB to swap backgrounds.
+* Press SHIFT to swap characters. 
+
 ### Limitations
 * I do not have the rights to distribute the 3D model for demoing purposes. You will need to manually [add it](https://github.com/hinzka/52blendshapes-for-VRoid-face). <br>
 
