@@ -24,7 +24,7 @@ Demo is available (.exe for testing without installing libraries). This is my fi
 ### Limitations
 * I do not have the rights to distribute the 3D model source. You will need to manually [add it](https://github.com/hinzka/52blendshapes-for-VRoid-face) to the project.<br>
 
-If you are interested in commissioning an artist to create a custom vroid 3d model with 52 blendshapes, consider donating to my [ko-fi](https://ko-fi.com/ganthefan) (end product will be embedded in this project and open source for the community).
+If you are interested in commissioning an artist to create a custom vroid 3d model with 52 blendshapes, consider donating to my [ko-fi](https://ko-fi.com/s/03d5234ac9) (end product will be embedded in this project and open source for the community).
 
 ### Notes:
 * See global_vars.py for some basic configuration options particularly in relation to the camera.
