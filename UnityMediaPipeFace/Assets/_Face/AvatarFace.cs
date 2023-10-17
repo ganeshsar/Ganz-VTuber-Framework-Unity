@@ -12,6 +12,7 @@ public class AvatarFace : MonoBehaviour
         PreferClosed // Used in the video, basically when the detection is unsure it will prefer to keep its eyes closed (good effects in terms of a viewer).
     }
 
+    [Header("General")]
     [SerializeField] 
     private PipeServer server;
     [SerializeField] 
@@ -19,13 +20,20 @@ public class AvatarFace : MonoBehaviour
     [SerializeField]
     private Animator animator; // Used to look up eye transform references.
     [SerializeField]
+    private Transform headIKTarget;
+    [SerializeField]
+    private Vector3 headIKTargetOffset;
+    [Header("Smoothing")]
+    [SerializeField]
     private float headSmoothSpeed = 10f;
     [SerializeField]
     private float eyeSmoothSpeed = 30f;
     [SerializeField]
     private float expressionSmoothSpeed = 15f;
+    [Header("Movement")]
     [SerializeField]
     private float movementScaler = 0.01f;
+    [Header("Blinking")]
     // Customize these parameters if you're having blinking problems.
     [SerializeField]
     private AnimationCurve blinkCurve;
@@ -33,8 +41,9 @@ public class AvatarFace : MonoBehaviour
     private float[] blinkMinMax = new float[] { .1f, .3f };
     [SerializeField]
     private SyncEyesBlinkMode syncEyeBlinks = SyncEyesBlinkMode.Average; // Particularly these...
+    [Header("Blendshape Management")]
     [SerializeField]
-    private Transform headIKTarget;
+    private BlendshapeMapper mapper;
 
     /// <summary>
     /// Latest values from detection. [0f, 1f] range.
@@ -57,9 +66,10 @@ public class AvatarFace : MonoBehaviour
     public Vector3 initialTrackPosition => i;
     public Vector3 TPosition => headIKTarget.transform.position;
 
-
     private void Start()
     {
+        mapper.Initialize();
+
         i = headIKTarget.position;
         latestValues = new Dictionary<BlendshapeKey, float>();
 
@@ -204,18 +214,16 @@ public class AvatarFace : MonoBehaviour
 
             latestValues[(BlendshapeKey)k] = v;
         }
-        /*latestValues[BlendshapeKey.EYE_BLINK_LEFT] *= latestValues[BlendshapeKey.EYE_BLINK_LEFT];
-        latestValues[BlendshapeKey.EYE_BLINK_RIGHT] *= latestValues[BlendshapeKey.EYE_BLINK_RIGHT];*/
     }
 
     private float GetBlendshapeNormalized(BlendshapeKey key)
     {
-        int i = sharedMesh.GetBlendShapeIndex(Shape2Name[key]);
+        int i = sharedMesh.GetBlendShapeIndex(mapper.GetBlendshapeName(key));
         return meshRenderer.GetBlendShapeWeight(i) / 100f;
     }
     private void SetBlendshape(BlendshapeKey i, float value)
     {
-        SetBlendshape(Shape2Name[i], value);
+        SetBlendshape(mapper.GetBlendshapeName(i), value);
     }
     private void SetBlendshape(string name, float value)
     {
@@ -285,10 +293,37 @@ public class AvatarFace : MonoBehaviour
         NOSE_SNEER_RIGHT = 51
     }
     public static readonly BlendshapeKey[] AllKeys = (BlendshapeKey[])System.Enum.GetValues(typeof(BlendshapeKey));
-    /// <summary>
-    /// Map from blendshape key to actual names of the blendshapes on the face...
-    /// </summary>
-    public static readonly Dictionary<BlendshapeKey, string> Shape2Name = new Dictionary<BlendshapeKey, string>()
+
+    [System.Serializable]
+    public class BlendshapeMapper
+    {
+        [SerializeField]
+        private bool capitalizeFirstWord = false;
+
+        public void Initialize()
+        {
+            // Modify each value according to the options (high performance after this).
+            foreach(BlendshapeKey k in AllKeys)
+            {
+                string s = Shape2Name[k];
+                if (capitalizeFirstWord&&s.Length>1)
+                {
+                    s = s[0].ToString().ToUpper() + s[1..];
+                }
+                Shape2Name[k] = s;
+            }
+        }
+
+        public string GetBlendshapeName(BlendshapeKey key)
+        {
+            return Shape2Name[key];
+        }
+
+        /// <summary>
+        /// Map from blendshape key to actual names of the blendshapes on the face...
+        /// <br>IF you need to modify this, create a custom class overriding Initialize instead of directly modifying this (generally speaking).</br>
+        /// </summary>
+        private Dictionary<BlendshapeKey, string> Shape2Name = new Dictionary<BlendshapeKey, string>()
     {
         { BlendshapeKey.NEUTRAL, "" },
         { BlendshapeKey.BROW_DOWN_LEFT, "browDownLeft" },
@@ -343,4 +378,5 @@ public class AvatarFace : MonoBehaviour
         { BlendshapeKey.NOSE_SNEER_LEFT, "noseSneerLeft" },
         { BlendshapeKey.NOSE_SNEER_RIGHT, "noseSneerRight" },
     };
+    }
 }
