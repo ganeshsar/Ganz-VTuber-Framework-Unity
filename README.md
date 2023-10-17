@@ -1,7 +1,7 @@
-# Ganz VTuber Framework
+# Ganz VTubing Framework
 
 ## Overview
-This project aims to provide a general framework that intermediate VTubers could use to build a custom VTuber avatar solution off of. It uses a Python backend for all of the face detection aspects, then pipes over the data to Unity for finetuning and displaying the avatar. It was a bit of a rush job, but I may continue work on it depending on things...<br><br>
+This project aims to provide a general framework that intermediate VTubers/programmers could use to build a custom VTuber avatar solution off of. It uses a Python backend for all of the face detection aspects, then pipes over the data to Unity for finetuning and displaying the avatar. <br><br>
 This means that you have the entire Unity pipeline at your disposal for VTubing and the simplicity of a Python backend as well. Currently, this project is powered by Google MediaPipe Face and requires only 1 RGB Webcam to use and no fancy GPU. Additional features may be added/developed upon request.<br><br>
 ![image showing waving](http://ganeshsaraswat.ca/InternetImages/facetracking.gif)
 
@@ -14,20 +14,14 @@ This means that you have the entire Unity pipeline at your disposal for VTubing 
 5. Run the Unity project (SampleScene.scene)
 6. Your avatar will be automatically calibrated upon playing Unity.
 
-Demo is available (.exe for testing without installing libraries). This is my first time trying this method, so let me know if you have problems.
-
-## Controls
-* Press TAB to swap backgrounds.
-* Press SHIFT to swap characters. 
-* Press ESC to quit.
-
 ### Limitations
-* I do not have the rights to distribute the 3D model source. You will need to manually [add it](https://github.com/hinzka/52blendshapes-for-VRoid-face) to the project.<br>
+* I do not have the rights to distribute the 3D model for demoing purposes. You will need to manually [add it](https://github.com/hinzka/52blendshapes-for-VRoid-face). <br>
+* For Programmers: Expect SWEEPING CHANGES to the architecture and code base going forward (currently not in a stable state). If you're just doing some experiments/learn this should be no problem, but I would not currently recommend using the present system for a long term project just yet.
 
-If you are interested in commissioning an artist to create a custom vroid 3d model with 52 blendshapes, consider donating to my [ko-fi](https://ko-fi.com/s/03d5234ac9) (end product will be embedded in this project and open source for the community).
+If you are interested in commissioning an artist to create a custom vroid 3d model with 52 blendshapes, consider donating to my [ko-fi](https://ko-fi.com/ganthefan) (end product will be embedded in this project and open source for the community).
 
 ### Notes:
-* See global_vars.py for some basic configuration options particularly in relation to the camera.
+* See global_vars.py for some basic configuration options to speed up/improve precision of the detection.
 * See AvatarFace script in the Unity inspector for configuration options (stylized behavior vs realistic, etc.)
-* Good natural lighting goes a long way to aid face detection (reference the Face Tracking window).
+* Good natural lighting goes a long way to aid face detection.
 * This project aims primarily to create an appealing tracking result over an accurate one.
