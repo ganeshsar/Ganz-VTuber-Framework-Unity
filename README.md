@@ -3,7 +3,7 @@
 ## Overview
 This project aims to provide a general framework that intermediate VTubers/programmers could use to build a custom VTuber avatar solution off of. It uses a Python backend for all of the face detection aspects, then pipes over the data to Unity for finetuning and displaying the avatar. <br><br>
 This means that you have the entire Unity pipeline at your disposal for VTubing and the simplicity of a Python backend as well. Currently, this project is powered by Google MediaPipe Face and requires only 1 RGB Webcam to use and no fancy GPU. Additional features may be added/developed upon request.<br><br>
-![image showing waving](http://ganeshsaraswat.ca/InternetImages/facetracking.gif)
+![image showing waving](https://ganthefan.com/images/facetracking.gif)
 
 
 ## Installation
